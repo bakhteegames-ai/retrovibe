@@ -1,0 +1,105 @@
+{
+    "name": "main",
+    "id": "main-scene",
+    "root": "scene-root",
+    "entities": {
+        "scene-root": {
+            "name": "Root",
+            "enabled": true,
+            "components": {},
+            "children": ["scene-manager", "camera-entity", "directional-light"]
+        },
+        "scene-manager": {
+            "name": "SceneManager",
+            "enabled": true,
+            "components": {
+                "script": {
+                    "enabled": true,
+                    "scripts": [
+                        {
+                            "name": "sceneSetup",
+                            "enabled": true
+                        }
+                    ]
+                }
+            },
+            "children": []
+        },
+        "camera-entity": {
+            "name": "Camera",
+            "enabled": true,
+            "position": [0, 3, 15],
+            "rotation": [0, -90, 0],
+            "components": {
+                "camera": {
+                    "enabled": true,
+                    "fov": 60,
+                    "nearClip": 0.1,
+                    "farClip": 1000,
+                    "clearColor": [0.05, 0.02, 0.1, 1],
+                    "postProcessing": true
+                },
+                "script": {
+                    "enabled": true,
+                    "scripts": [
+                        {
+                            "name": "cameraController",
+                            "enabled": true,
+                            "attributes": {
+                                "moveSpeed": 8,
+                                "lookSensitivity": 0.15,
+                                "pitchLimit": 80,
+                                "initialPosition": [0, 3, 15]
+                            }
+                        },
+                        {
+                            "name": "vhsPostProcess",
+                            "enabled": true,
+                            "attributes": {
+                                "intensity": 1.0,
+                                "chromaticAberration": 2.0,
+                                "scanlineIntensity": 0.15,
+                                "noiseIntensity": 0.08,
+                                "warmth": 0.1,
+                                "vignette": 0.3
+                            }
+                        }
+                    ]
+                }
+            },
+            "children": []
+        },
+        "directional-light": {
+            "name": "MoonLight",
+            "enabled": true,
+            "position": [0, 10, 0],
+            "rotation": [45, -30, 0],
+            "components": {
+                "light": {
+                    "enabled": true,
+                    "type": "directional",
+                    "color": [0.6, 0.7, 1.0],
+                    "intensity": 0.4,
+                    "castShadows": true,
+                    "shadowBias": 0.05,
+                    "normalOffsetBias": 0.1,
+                    "shadowResolution": 1024
+                }
+            },
+            "children": []
+        }
+    },
+    "settings": {
+        "render": {
+            "fog": "linear",
+            "fogStart": 5,
+            "fogEnd": 80,
+            "fogColor": [0.08, 0.05, 0.15],
+            "ambientLight": [0.15, 0.1, 0.25]
+        },
+        "physics": {
+            "gravity": [0, -9.81, 0]
+        }
+    },
+    "scriptsOrder": ["sceneSetup", "cameraController", "vhsPostProcess"]
+}
