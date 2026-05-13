@@ -6,6 +6,55 @@
 
 var SceneSetup = pc.createScript('sceneSetup');
 
+// Atmospheric settings exposed for tuning - OPTIMIZED FOR EXTREME VHS
+SceneSetup.attributes.add('fogColorR', {
+    type: 'number',
+    default: 0.15,
+    min: 0.0,
+    max: 1.0,
+    title: 'Fog Color R'
+});
+
+SceneSetup.attributes.add('fogColorG', {
+    type: 'number',
+    default: 0.08,
+    min: 0.0,
+    max: 1.0,
+    title: 'Fog Color G'
+});
+
+SceneSetup.attributes.add('fogColorB', {
+    type: 'number',
+    default: 0.35,
+    min: 0.0,
+    max: 1.0,
+    title: 'Fog Color B'
+});
+
+SceneSetup.attributes.add('fogStart', {
+    type: 'number',
+    default: 5.0,
+    min: 1.0,
+    max: 20.0,
+    title: 'Fog Start'
+});
+
+SceneSetup.attributes.add('fogEnd', {
+    type: 'number',
+    default: 60.0,
+    min: 20.0,
+    max: 150.0,
+    title: 'Fog End'
+});
+
+SceneSetup.attributes.add('ambientIntensity', {
+    type: 'number',
+    default: 0.3,
+    min: 0.0,
+    max: 1.0,
+    title: 'Ambient Intensity'
+});
+
 // Initialize function - runs once at startup
 SceneSetup.prototype.initialize = function() {
     // Set up the scene background and fog
@@ -27,14 +76,14 @@ SceneSetup.prototype.setupEnvironment = function() {
     // Dark night sky color (deep blue/purple)
     scene.background = new pc.Color(0.05, 0.02, 0.1);
     
-    // Enable fog for atmosphere
+    // Enable fog for atmosphere - AGGRESSIVE for VHS erosion
     scene.fog = pc.FOG_LINEAR;
-    scene.fogStart = 5;
-    scene.fogEnd = 80;
-    scene.fogColor = new pc.Color(0.08, 0.05, 0.15);
+    scene.fogStart = this.fogStart;
+    scene.fogEnd = this.fogEnd;
+    scene.fogColor = new pc.Color(this.fogColorR, this.fogColorG, this.fogColorB);
     
-    // Ambient light (dim purple/blue)
-    scene.ambientLight = new pc.Color(0.15, 0.1, 0.25);
+    // Ambient light (dim purple/blue) - kept dark for contrast
+    scene.ambientLight = new pc.Color(0.15 * this.ambientIntensity, 0.1 * this.ambientIntensity, 0.25 * this.ambientIntensity);
 };
 
 SceneSetup.prototype.createGround = function() {
